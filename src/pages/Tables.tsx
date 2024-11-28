@@ -1,6 +1,6 @@
 import Breadcrumb from '../components/Breadcrumb';
 import TableOne from '../components/Tables/TableOne';
-import TableThree from '../components/Tables/ProperSubject';
+import TableThree from '../components/Tables/Subject';
 import TableTwo from '../components/Tables/TableTwo';
 
 const Tables = () => {
