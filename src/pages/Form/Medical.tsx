@@ -1,6 +1,6 @@
 import Breadcrumb from '../../components/Breadcrumb';
-import RepeateSujectBuckert from '../../components/Tables/RepeatBuckert';
-import RepeatSubjet from '../../components/Tables/RepeatSubject';
+import MedicalSubjetBuckert from '../../components/Tables/MedicalSubjectBuckert';
+import Subject from '../../components/Tables/Subject';
 
 const MedicalForm = () => {
   return (
@@ -21,10 +21,10 @@ const MedicalForm = () => {
                     <div className="relative z-20 bg-transparent dark:bg-form-input">
                       <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                         <option value="">Select Year</option>
-                        <option value="">1 Year</option>
-                        <option value="">2 year</option>
-                        <option value="">3 Year</option>
-                        <option value="">4 Year</option>
+                        <option value="1">1 Year</option>
+                        <option value="2">2 year</option>
+                        <option value="3">3 Year</option>
+                        <option value="4">4 Year</option>
                       </select>
                       <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                         <svg
@@ -55,8 +55,8 @@ const MedicalForm = () => {
                     <div className="relative z-20 bg-transparent dark:bg-form-input">
                       <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                         <option value="">Select Semester</option>
-                        <option value="">1</option>
-                        <option value="">2</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
                       </select>
                       <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                         <svg
@@ -83,20 +83,27 @@ const MedicalForm = () => {
                 <div>
 
                   <div className='px-10'>
-                    <RepeatSubjet />
+
                   </div>
                 </div>
+                <div className="flex flex-col gap-9">
+
+                  <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <Subject />
+                  </div>
+                </div>
+
               </div>
             </form>
           </div>
-        </div>
-        <div className="flex flex-col gap-9">
-
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <RepeateSujectBuckert />
+          <div>
+            <div className="flex flex-col gap-9">
+              <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <MedicalSubjetBuckert />
+              </div>
+            </div>
           </div>
         </div>
-
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
@@ -134,6 +141,13 @@ const MedicalForm = () => {
               />
             </div>
           </div>
+        </div>
+        <div className="mb-5">
+          <input
+            type="submit"
+            value="Next"
+            className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+          />
         </div>
       </div>
 
