@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import UniLogo from '../../images/logo/uni_logo.png';
+import ApiService from '../../Api/ApiService.ts';
+import Swal from 'sweetalert2';
 
 const SignUpSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  username: Yup.string().required('Username is required').matches(/^\d{4}\/[A-Za-z]+\/\d+$/, 'Invalid username format (e.g., 2019/ICT/33)'),
   faculty: Yup.string().required('Faculty is required'),
   department: Yup.string().required('Department is required'),
   year: Yup.string().required('Year is required'),
@@ -22,10 +24,13 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const SignUp = () => {
+
+  const api = new ApiService();
+
   return (
     <Formik
       initialValues={{
-        name: '',
+        username: '',
         faculty: '',
         department: '',
         year: '',
@@ -35,10 +40,44 @@ const SignUp = () => {
         mobile: '',
         password: '',
         confirmPassword: '',
+        role:'STUDENT'
       }}
       validationSchema={SignUpSchema}
-      onSubmit={(values) => {
-        console.log('Form Values', values);
+      onSubmit={ async (values : any) => {
+        try {
+          const response=  await api.post("/api/auth/register", values);
+          if (response.jwt!=null) {
+            localStorage.setItem('token', response.jwt);
+            // Success response
+            Swal.fire({
+              title: 'Success!',
+              text: 'You have signed up successfully!',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            }).then(() => {
+              // Redirect to login page after successful signup
+              window.location.href = '/dashboard';
+            });
+          } else {
+            // Failure response
+            Swal.fire({
+              title: 'Error!',
+              text: response.data.message || 'Something went wrong. Please try again.',
+              icon: 'error',
+              timer: 1500,
+              showConfirmButton: false
+            });
+          }
+        }catch (error: any) {
+          // Handle any errors during the request
+          Swal.fire({
+            title: 'Error!',
+            text: error.response?.data?.message || 'Network error. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        }
       }}
     >
       {() => (
@@ -66,14 +105,14 @@ const SignUp = () => {
 
                   {/* Name */}
                   <div className="mb-4">
-                    <label className="mb-2.5 block font-medium text-black dark:text-white">Name</label>
+                    <label className="mb-2.5 block font-medium text-black dark:text-white">User Name</label>
                     <Field
-                      name="name"
+                      name="username"
                       type="text"
-                      placeholder="Enter your full name"
+                      placeholder="Enter your username"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
-                    <ErrorMessage name="name" component="div" className="text-danger" />
+                    <ErrorMessage name="username" component="div" className="text-danger" />
                    </div>
 
                   {/* Faculty and Department */}
