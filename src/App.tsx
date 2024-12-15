@@ -12,11 +12,13 @@ const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true); // Simulate auth state
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false); // Simulate auth state
   const location = useLocation();
 
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000);
+    if(localStorage.getItem('token')!=null)
+      setIsAuthenticated(true);
   }, []);
 
   return loading ? (
